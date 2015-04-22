@@ -1,0 +1,12 @@
+*.prefs
+.settings
+classes
+*.classes
+*.class
+.DS_Store
+*.project
+target
+.project
+.classpath
+log
+.log

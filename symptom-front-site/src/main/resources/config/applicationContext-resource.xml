@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jpa="http://www.springframework.org/schema/data/jpa"
 	xmlns:repository="http://www.springframework.org/schema/data/repository"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xsi:schemaLocation="http://www.springframework.org/schema/data/repository http://www.springframework.org/schema/data/repository/spring-repository-1.5.xsd
@@ -13,20 +12,37 @@
 	<!-- 启用 annotation事务 -->
 	<tx:annotation-driven order="10" transaction-manager="transactionManager" />
 	
-	<!-- <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
-		depends-on="propertyConfigurer" destroy-method="close">
-		<property name="driverClass" value="${hq.jdbc.driverClassName}" />
-		<property name="jdbcUrl" value="${hq.jdbc.url}" />
-		<property name="user" value="${hq.jdbc.user}" />
-		<property name="password" value="${hq.jdbc.password}" />
-		<property name="minPoolSize" value="${hq.jdbc.minPoolSize}" />
-		<property name="maxPoolSize" value="${hq.jdbc.maxPoolSize}" />
-		<property name="initialPoolSize" value="${hq.jdbc.initialPoolSize}" />
-		<property name="acquireIncrement" value="${hq.jdbc.acquireIncrement}" />
-		<property name="idleConnectionTestPeriod" value="${hq.jdbc.idleConnectionTestPeriod}" />
-		<property name="checkoutTimeout" value="${hq.jdbc.checkoutTimeout}" />
-	</bean> -->
+	<bean id="realDataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${database.driverClassName}" />
+        <property name="url" value="${database.url}" />
+        <property name="username" value="${database.username}" />
+        <property name="password" value="${database.password}" />
+        <property name="defaultAutoCommit" value="false" />
+        <property name="maxActive" value="${cp.maxActive}" />
+        <property name="maxIdle" value="${cp.maxIdle}" />
+        <property name="minIdle" value="${cp.minIdle}" />
+        <property name="maxWait" value="${cp.maxWait}" />
+    </bean>
 
-	
+    <bean id="dataSource" class="net.sf.log4jdbc.Log4jdbcProxyDataSource">
+        <constructor-arg index="0" ref="realDataSource" />
+    </bean>
+
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- MyBatis -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<property name="typeAliasesPackage" value="com.chenfeng.symptom.domain.model.mybatis" />
+		<property name="mapperLocations" value="classpath:/META-INF/mybatis/*Mapper.xml" />
+	</bean>
+
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="basePackage" value="jp.co.itochu.monoz.domain.repository.mybatis" />
+		<property name="annotationClass"
+			value="jp.co.itochu.monoz.domain.common.annotation.MyBatisRepository" />
+	</bean>
 
 </beans>

@@ -1,4 +1,4 @@
-package com.chenfeng.symptom.domain.model.mybatis.common.config;
+package com.chenfeng.symptom.domain.common.config;
 
 import org.springframework.stereotype.Component;
 

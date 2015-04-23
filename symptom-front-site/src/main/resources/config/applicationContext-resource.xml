@@ -44,9 +44,9 @@
 
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
 		<property name="basePackage"
-			value="com.chenfeng.symptom.domain.model.mybatis.repository.mybatis" />
+			value="com.chenfeng.symptom.domain.repository.mybatis" />
 		<property name="annotationClass"
-			value="com.chenfeng.symptom.domain.model.mybatis.common.annotation.MyBatisRepository" />
+			value="com.chenfeng.symptom.domain.common.annotation.MyBatisRepository" />
 	</bean>
 
 </beans>

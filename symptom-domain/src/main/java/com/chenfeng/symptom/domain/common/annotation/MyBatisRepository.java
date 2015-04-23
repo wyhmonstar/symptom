@@ -1,4 +1,4 @@
-package com.chenfeng.symptom.domain.model.mybatis.common.annotation;
+package com.chenfeng.symptom.domain.common.annotation;
 
 
 import java.lang.annotation.Documented;

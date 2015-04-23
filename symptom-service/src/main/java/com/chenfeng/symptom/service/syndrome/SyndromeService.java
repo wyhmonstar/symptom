@@ -5,4 +5,6 @@ import com.chenfeng.symptom.service.CrudService;
 
 public interface SyndromeService extends CrudService<Syndrome, Long> {
 
+    void create(SyndromeInput syndromeInput);
+    
 }

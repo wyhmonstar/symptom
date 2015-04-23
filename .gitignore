@@ -11,3 +11,4 @@ target
 log
 .log
 .springBeans
+*/tools/mybatis-generator-usage/src/main/java/*

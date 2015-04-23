@@ -1,4 +1,4 @@
-package com.chenfeng.symptom.domain.model.mybatis;
+package com.chenfeng.symptom.domain.model.mybatis.repository.mybatis;
 
 /**
  * Hello world!

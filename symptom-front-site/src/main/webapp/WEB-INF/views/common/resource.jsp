@@ -7,6 +7,8 @@
 
 <script src="${SPM_CONTEXT}/js/lib/jquery/jquery.min.js"></script>
 <script src="${SPM_CONTEXT}/js/lib/bootstrap/bootstrap.min.js"></script>
+<script src="${SPM_CONTEXT}/js/lib/jquery-validate/jquery.validate.min.js"></script>
+<script src="${SPM_CONTEXT}/js/lib/jquery-validate/messages_zh.min.js"></script>
 
 <script type="text/javascript">
 	window.URL = window.URL || window.webkitURL || window.mozURL || window.msURL;  	

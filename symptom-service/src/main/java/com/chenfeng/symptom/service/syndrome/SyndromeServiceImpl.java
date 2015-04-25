@@ -1,5 +1,10 @@
 package com.chenfeng.symptom.service.syndrome;
 
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.springframework.beans.BeanUtils;
@@ -27,13 +32,34 @@ public class SyndromeServiceImpl extends CrudServiceImpl<Syndrome, Long, Syndrom
 
     @Override
     @Transactional
-    public void create(SyndromeInput syndromeInput) {
+    public void create(SyndromeCreateInput syndromeCreateInput) {
         Syndrome syndrome = new Syndrome();
         SyndromeElement syndromeElement = new SyndromeElement();
-        BeanUtils.copyProperties(syndromeInput, syndrome);
-        BeanUtils.copyProperties(syndromeInput, syndromeElement);
+        BeanUtils.copyProperties(syndromeCreateInput, syndrome);
+        BeanUtils.copyProperties(syndromeCreateInput, syndromeElement);
         syndromeElement.setIsRelate(Constant.SYNDROME_ELEMENT_RELATE_TRUE);
         repository.insertSelective(syndrome);
         syndromeElementMapper.insertSelective(syndromeElement);
     }
+
+	@Override
+	public Map<String, List<Syndrome>> findSyndromeInitData() {
+		Map<String, List<Syndrome>> syndromeNameMap = new LinkedHashMap<>();
+		List<Syndrome> syndromes  = repository.findAll();
+		if (!syndromes.isEmpty()) {
+			for (Syndrome syndrome : syndromes) {
+				if (syndromeNameMap.containsKey(syndrome.getSymptomName())) {
+					List<Syndrome> sdm = syndromeNameMap.get(syndrome.getSymptomName());
+					sdm.add(syndrome);
+					syndromeNameMap.put(syndrome.getSymptomName(), sdm);
+				} else {
+					List<Syndrome> sdm = new ArrayList<>();
+					sdm.add(syndrome);
+					syndromeNameMap.put(syndrome.getSymptomName(), sdm);
+				}
+			}
+		}
+		
+		return syndromeNameMap;
+	}
 }

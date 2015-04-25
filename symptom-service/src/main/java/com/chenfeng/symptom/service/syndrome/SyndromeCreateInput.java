@@ -5,7 +5,7 @@ import javax.validation.constraints.Size;
 import org.hibernate.validator.constraints.NotBlank;
 
 
-public class SyndromeInput {
+public class SyndromeCreateInput {
     @NotBlank
     @Size(max = 100)
     private String symptomName;

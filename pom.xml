@@ -20,6 +20,7 @@
 		<log4j.version>1.2.16</log4j.version>
 		<mysql.version>5.1.31</mysql.version>
 		<mybatis.spring.version>1.2.2</mybatis.spring.version>
+		<spring.security.version>3.2.0.RELEASE</spring.security.version>
 	</properties>
 
 	<dependencyManagement>
@@ -126,6 +127,29 @@
 				<version>1.2</version>
 				<scope>runtime</scope>
 			</dependency>
+			<dependency>
+				<groupId>javax.servlet</groupId>
+				<artifactId>javax.servlet-api</artifactId>
+				<version>3.0.1</version>
+			</dependency>
+
+			<!-- spring security start -->
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-core</artifactId>
+				<version>${spring.security.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-web</artifactId>
+				<version>${spring.security.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.springframework.security</groupId>
+				<artifactId>spring-security-config</artifactId>
+				<version>${spring.security.version}</version>
+			</dependency>
+			<!-- spring security end -->
 		</dependencies>
 	</dependencyManagement>
 </project>

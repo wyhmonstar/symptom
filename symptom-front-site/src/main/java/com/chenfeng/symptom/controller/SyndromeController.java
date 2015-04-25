@@ -25,6 +25,7 @@ public class SyndromeController {
         return "syndrome/create";
     }
     
+//    @RolesAllowed("ROLE_USER")
     @RequestMapping(value = "create", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
     public String doCreateSympotm(@Valid SyndromeInput syndromeInput) {

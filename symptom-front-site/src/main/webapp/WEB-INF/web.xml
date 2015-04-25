@@ -8,6 +8,32 @@
 		<session-timeout>30</session-timeout>
 	</session-config>
 
+	<!-- 编码统一最好放最上面，最先加载，防止乱码 -->
+	<filter>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<init-param>
+			<param-name>encoding</param-name>
+			<param-value>utf-8</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CharacterEncodingFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- 编码统一最好放最上面，最先加载，防止乱码 -->
+
+	<!-- 然后接着是SpringSecurity必须的filter 优先配置，让SpringSecurity先加载，防止SpringSecurity拦截失效 -->
+	<filter>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>springSecurityFilterChain</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
 	<!-- Spring配置 -->
 	<!-- ====================================== -->
 	<listener>
@@ -16,7 +42,10 @@
 	<!-- 指定Spring Bean的配置文件所在目录。默认配置在WEB-INF目录下 -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>classpath:config/applicationContext.xml</param-value>
+		<param-value>
+			classpath:config/applicationContext.xml
+			classpath:config/applicationContext-security.xml
+		</param-value>
 	</context-param>
 
 
@@ -37,18 +66,4 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-	<!-- 解决spring mvc post 乱码 -->
-	<filter>
-		<filter-name>CharacterEncodingFilter</filter-name>
-		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
-		<init-param>
-			<param-name>encoding</param-name>
-			<param-value>utf-8</param-value>
-		</init-param>
-	</filter>
-	<filter-mapping>
-		<filter-name>CharacterEncodingFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	<!-- 解决spring mvc post 乱码 -->
 </web-app>

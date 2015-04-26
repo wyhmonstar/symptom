@@ -34,9 +34,11 @@
 		bindKeyChange : function() {
 			$(constant.SYMPTOM_NAME_SELECT).on('change', function() {
 				var sn = $(this).val();
+				console.debug(sn);
 				$.each(viewModel.keys(), function(i, n) {
-					if (n.symptomName === sn) {
-						viewModel.values(n.syndromes);
+					console.debug(n.symptomName());
+					if (n.symptomName() === sn) {
+						viewModel.values(n.syndromes());
 					}
 				});
 			});
@@ -47,9 +49,10 @@
 				url : $.SPM.context + '/syndrome/init',
 				dataType : 'JSON',
 				success : function(data) {
-					viewModel.keys(data);
-					if (data[0]) {
-						viewModel.values(data[0].syndromes);
+					var temp = ko.mapping.fromJS(data)();
+					viewModel.keys(temp);
+					if (temp[0]) {
+						viewModel.values(temp[0].syndromes());
 					}
 				}
 			});

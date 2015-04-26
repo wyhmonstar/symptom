@@ -9,7 +9,23 @@
         http://www.springframework.org/schema/mvc
         http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd">
 
-    <mvc:annotation-driven />
+	<mvc:annotation-driven />
+
+	<!-- 启动Spring MVC的注解功能，完成请求和注解POJO的映射 -->
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+		<property name="messageConverters">
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/plain;charset=utf-8</value>
+						<value>text/html;charset=utf-8</value>
+						<value>text/json;charset=utf-8</value>
+						<value>application/json;charset=utf-8</value>
+					</list>
+				</property>
+			</bean>
+		</property>
+	</bean>
 
 	<!-- 视图解释类  -->
 	<bean
@@ -25,9 +41,11 @@
 	<mvc:resources mapping="/public/**" location="/public/" />
 	<mvc:annotation-driven />
 
-	<mvc:view-controller path="/" view-name="forward:symptom-front-site" />
+	<mvc:view-controller path="/"
+		view-name="forward:symptom-front-site" />
 	<context:component-scan base-package="com.chenfeng.symptom.controller">
-		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
+		<context:include-filter type="annotation"
+			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
-	
+
 </beans>

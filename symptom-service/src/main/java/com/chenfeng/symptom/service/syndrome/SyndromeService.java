@@ -1,7 +1,6 @@
 package com.chenfeng.symptom.service.syndrome;
 
 import java.util.List;
-import java.util.Map;
 
 import com.chenfeng.symptom.domain.model.mybatis.Syndrome;
 import com.chenfeng.symptom.service.CrudService;
@@ -24,6 +23,6 @@ public interface SyndromeService extends CrudService<Syndrome, Long> {
      * @author wangyuhao
      * @date 2015年4月25日 下午9:25:54
      */
-    Map<String, List<Syndrome>> findSyndromeInitData();
+    List<SyndromeInitOutput> findSyndromeInitData();
     
 }

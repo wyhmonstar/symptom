@@ -11,7 +11,7 @@
 		<!-- Collect the nav links, forms, and other content for toggling -->
 		<div class="collapse navbar-collapse">
 			<ul class="nav navbar-nav navbar-right navbar-btn">
-				<li><button class="btn btn-link btn-block logout" href="#">Logout</button></li>
+				<li><button class="btn btn-link btn-block logout" onclick="javascript:window.location.href='${SPM_CONTEXT}/j_spring_security_logout'">Logout</button></li>
 			</ul>
 		</div>
 	</div>

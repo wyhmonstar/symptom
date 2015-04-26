@@ -43,7 +43,8 @@ public class SyndromeServiceImpl extends CrudServiceImpl<Syndrome, Long, Syndrom
     }
 
 	@Override
-	public Map<String, List<Syndrome>> findSyndromeInitData() {
+	public List<SyndromeInitOutput> findSyndromeInitData() {
+		List<SyndromeInitOutput> syndromeInitOutputs = new ArrayList<>();
 		Map<String, List<Syndrome>> syndromeNameMap = new LinkedHashMap<>();
 		List<Syndrome> syndromes  = repository.findAll();
 		if (!syndromes.isEmpty()) {
@@ -60,6 +61,13 @@ public class SyndromeServiceImpl extends CrudServiceImpl<Syndrome, Long, Syndrom
 			}
 		}
 		
-		return syndromeNameMap;
+		for (String syndromeName : syndromeNameMap.keySet()) {
+			SyndromeInitOutput syndromeInitOutput = new SyndromeInitOutput();
+			syndromeInitOutput.setSymptomName(syndromeName);
+			syndromeInitOutput.setSyndromes(syndromeNameMap.get(syndromeName));
+			syndromeInitOutputs.add(syndromeInitOutput);
+		}
+		
+		return syndromeInitOutputs;
 	}
 }

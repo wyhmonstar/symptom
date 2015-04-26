@@ -21,6 +21,7 @@
 		<mysql.version>5.1.31</mysql.version>
 		<mybatis.spring.version>1.2.2</mybatis.spring.version>
 		<spring.security.version>3.2.0.RELEASE</spring.security.version>
+		<jackson.version>2.5.2</jackson.version>
 	</properties>
 
 	<dependencyManagement>
@@ -150,6 +151,39 @@
 				<version>${spring.security.version}</version>
 			</dependency>
 			<!-- spring security end -->
+			
+			<!-- jackson start -->
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-core</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-annotations</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.fasterxml.jackson.core</groupId>
+				<artifactId>jackson-databind</artifactId>
+				<version>${jackson.version}</version>
+			</dependency>
+			<!-- jackson end -->
+
 		</dependencies>
 	</dependencyManagement>
+	
+	<build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <configuration>
+                    <source>1.7</source>
+                    <target>1.7</target>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+	
 </project>

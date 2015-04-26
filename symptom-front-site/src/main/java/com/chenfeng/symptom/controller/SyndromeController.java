@@ -1,7 +1,6 @@
 package com.chenfeng.symptom.controller;
 
 import java.util.List;
-import java.util.Map;
 
 import javax.validation.Valid;
 
@@ -14,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
-import com.chenfeng.symptom.domain.model.mybatis.Syndrome;
 import com.chenfeng.symptom.service.syndrome.SyndromeCreateInput;
+import com.chenfeng.symptom.service.syndrome.SyndromeInitOutput;
 import com.chenfeng.symptom.service.syndrome.SyndromeService;
 
 @Controller
@@ -56,7 +55,7 @@ public class SyndromeController {
     @RequestMapping(value = "init", method = RequestMethod.POST)
     @ResponseBody
     @ResponseStatus(HttpStatus.OK)
-    public Map<String, List<Syndrome>> init() {
+    public List<SyndromeInitOutput> init() {
     	
     	return syndromeService.findSyndromeInitData();
     }

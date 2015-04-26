@@ -3,16 +3,23 @@
 	var constant = {
 		MENU_CSS : '.bind-menu-syndrome-search',
 		ADD_BUTTON : '.bind-search-add-button',
-		REMOVE_BUTTON : '.bind-search-remove-button'
+		REMOVE_BUTTON : '.bind-search-remove-button',
+		SYMPTOM_NAME_SELECT : '.bind-search-symptom-name-select'
 	};
 
-	var viewModel = ko.mapping.fromJS({});
-	
+	var viewModel = {
+		keys : ko.observableArray([]),
+		values : ko.observableArray([])
+	};
+
 	var bindEvent = {
 		bindAddElement : function() {
-			$(constant.ADD_BUTTON).on('click', function() {
-				$(this).closest('div .control-group').append($(this).closest('div .row').clone(true));
-			});
+			$(constant.ADD_BUTTON).on(
+					'click',
+					function() {
+						$(this).closest('div .control-group').append(
+								$(this).closest('div .row').clone(true));
+					});
 		},
 		bindRemoveElement : function() {
 			$(constant.REMOVE_BUTTON).on('click', function() {
@@ -24,13 +31,26 @@
 					.removeClass('list-group-item-success');
 			$(constant.MENU_CSS).addClass('list-group-item-success');
 		},
+		bindKeyChange : function() {
+			$(constant.SYMPTOM_NAME_SELECT).on('change', function() {
+				var sn = $(this).val();
+				$.each(viewModel.keys(), function(i, n) {
+					if (n.symptomName === sn) {
+						viewModel.values(n.syndromes);
+					}
+				});
+			});
+		},
 		initData : function() {
 			$.ajax({
-				type: post,
-				dateType: json,
-				url : $.SPM.context + 'syndrome/init',
+				type : 'POST',
+				url : $.SPM.context + '/syndrome/init',
+				dataType : 'JSON',
 				success : function(data) {
-					ko.mapping.fromJS(data, viewModel);
+					viewModel.keys(data);
+					if (data[0]) {
+						viewModel.values(data[0].syndromes);
+					}
 				}
 			});
 		}
@@ -42,6 +62,7 @@
 			bindEvent.bindMenuCss();
 			bindEvent.bindAddElement();
 			bindEvent.bindRemoveElement();
+			bindEvent.bindKeyChange();
 			bindEvent.initData();
 		}
 	};

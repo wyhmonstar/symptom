@@ -9,21 +9,32 @@
 
 	var viewModel = {
 		keys : ko.observableArray([]),
-		values : ko.observableArray([])
+		itemCount : ko.observable(1)
 	};
 
 	var bindEvent = {
 		bindAddElement : function() {
-			$(constant.ADD_BUTTON).on(
-					'click',
-					function() {
-						$(this).closest('div .control-group').append(
-								$(this).closest('div .row').clone(true));
-					});
+			$(constant.ADD_BUTTON).on('click', function() {
+				$(this).closest('div .control-group').append(
+						$(this).closest('div .row').clone(true));
+
+				viewModel.itemCount(viewModel.itemCount() + 1);
+				if (viewModel.itemCount() > 1) {
+					$(constant.REMOVE_BUTTON).show();
+				} else {
+					$(constant.REMOVE_BUTTON).hide();
+				}
+			});
 		},
 		bindRemoveElement : function() {
 			$(constant.REMOVE_BUTTON).on('click', function() {
 				$(this).closest('div .row').remove();
+				viewModel.itemCount(viewModel.itemCount() - 1);
+				if (viewModel.itemCount() > 1) {
+					$(constant.REMOVE_BUTTON).show();
+				} else {
+					$(constant.REMOVE_BUTTON).hide();
+				}
 			});
 		},
 		bindMenuCss : function() {
@@ -33,12 +44,15 @@
 		},
 		bindKeyChange : function() {
 			$(constant.SYMPTOM_NAME_SELECT).on('change', function() {
-				var sn = $(this).val();
-				console.debug(sn);
-				$.each(viewModel.keys(), function(i, n) {
-					console.debug(n.symptomName());
-					if (n.symptomName() === sn) {
-						viewModel.values(n.syndromes());
+				var $self = $(this);
+				var sn = $self.val();
+				$.each(viewModel.keys(), function(i, item) {
+					if (item.symptomName === sn) {
+						var $desc = $self.closest('div .form-group').find('select[name="description"]');
+						$desc.empty();
+						$.each(item.syndromes , function(i, n) {
+							$desc.append(jQuery("<option>adffd</option>").attr({'value':n.description}).text(n.description));
+						});
 					}
 				});
 			});
@@ -49,11 +63,7 @@
 				url : $.SPM.context + '/syndrome/init',
 				dataType : 'JSON',
 				success : function(data) {
-					var temp = ko.mapping.fromJS(data)();
-					viewModel.keys(temp);
-					if (temp[0]) {
-						viewModel.values(temp[0].syndromes());
-					}
+					viewModel.keys(data);
 				}
 			});
 		}

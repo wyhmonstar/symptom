@@ -30,9 +30,7 @@
 
 									<label for="description" class="col-sm-2 control-label">描述:</label>
 									<div class="col-sm-4">
-									    <select class="form-control" name="description"
-                                            data-bind="options: values,  optionsText: 'description', 
-                                              value: 'description'"></select>
+									    <select class="form-control" name="description">
 										</select>
 									</div>
 								</div>
@@ -42,8 +40,7 @@
 											class="btn btn-info bind-search-add-button">添加</button>
 									</div>
 									<div class="col-sm-2 ">
-										<button type="button"
-											class="btn btn-warning bind-search-remove-button">删除</button>
+										<button type="button" class="btn btn-warning bind-search-remove-button" style="display: none;">删除</button>
 									</div>
 								</div>
 

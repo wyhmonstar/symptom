@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -47,8 +48,9 @@ public class SyndromeController {
 
     @RequestMapping(value = "search", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.OK)
-    public String doSearchSympotm(Model model) {
-    	
+    public String doSearchSympotm(@RequestParam("symptomName") List<String> symptomName , @RequestParam("description") List<String> description, Model model) {
+    	System.out.println(symptomName);
+    	System.out.println(description);
     	return "syndrome/search";
     }
 
